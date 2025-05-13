@@ -1,163 +1,180 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Интерактивные графики</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            text-align: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Интерактивные графики</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      text-align: center;
+    }
 
-        h1 {
-            margin-top: 30px;
-            font-size: 2em;
-            color: #333;
-        }
+    h1 {
+      margin-top: 30px;
+      font-size: 2em;
+      color: #333;
+    }
 
-        .section {
-            margin: 20px auto;
-            max-width: 1000px;
-            padding: 0 10px;
-        }
+    .sections-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-        .section h2 {
-            font-size: 1.4em;
-            margin-bottom: 10px;
-            color: #222;
-        }
+    .section {
+      flex: 1 1 45%;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
 
-        .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
+    .section h2 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      color: #222;
+    }
 
-        button {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 12px 18px;
-            font-size: 15px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            flex: 1 1 200px;
-            max-width: 250px;
-        }
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-        button:hover {
-            background-color: #45a049;
-        }
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
 
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-            margin-top: 20px;
-        }
+    button:hover {
+      background-color: #45a049;
+    }
 
-        @media (max-width: 600px) {
-            button {
-                font-size: 14px;
-                padding: 10px 14px;
-            }
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      margin-top: 20px;
+    }
 
-            h1 {
-                font-size: 1.5em;
-            }
+    #rotate-warning {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #f4f4f9;
+      color: #333;
+      font-size: 1.2em;
+      font-weight: bold;
+      padding: 20px;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
 
-            .section h2 {
-                font-size: 1.2em;
-            }
-        }
+    @media screen and (orientation: portrait) and (max-width: 800px) {
+      #rotate-warning {
+        display: flex;
+      }
 
-        /* Сообщение при вертикальной ориентации */
-        #rotate-warning {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #f4f4f9;
-            color: #333;
-            font-size: 1.2em;
-            font-weight: bold;
-            padding: 20px;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
+      body > *:not(#rotate-warning) {
+        display: none !important;
+      }
+    }
 
-        @media screen and (orientation: portrait) and (max-width: 800px) {
-            #rotate-warning {
-                display: flex;
-            }
+    @media (max-width: 768px) {
+      .sections-container {
+        flex-direction: column;
+        padding: 10px;
+      }
 
-            body > *:not(#rotate-warning) {
-                display: none !important;
-            }
-        }
-    </style>
+      .section {
+        flex: 1 1 100%;
+      }
+
+      button {
+        font-size: 13px;
+        padding: 8px 10px;
+      }
+
+      h1 {
+        font-size: 1.5em;
+      }
+
+      .section h2 {
+        font-size: 1em;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div id="rotate-warning">
-        <p>Пожалуйста, поверните устройство в горизонтальное положение для корректного отображения графиков.</p>
-    </div>
+  <div id="rotate-warning">
+    <p>Пожалуйста, поверните устройство в горизонтальное положение для корректного отображения графиков.</p>
+  </div>
 
-    <h1>Прогнозирование налоговых доходов бюджета Российской Федерации</h1>
+  <h1>Прогнозирование налоговых доходов бюджета Российской Федерации</h1>
 
+  <div class="sections-container">
     <div class="section">
-        <h2>Исходные временные ряды</h2>
-        <div class="button-group">
-            <button onclick="switchPlot('graph_html/vat_monthly.html')">Месячная частота</button>
-            <button onclick="switchPlot('graph_html/vat_annual.html')">Годовая частота</button>
-        </div>
-    </div>
-
-    <div class="section">
-        <h2>Модели, обученные на данных с месячной частотой</h2>
-        <div class="button-group">
-            <button onclick="switchPlot('graph_html/best_month.html')">Лучшие модели</button>
-            <button onclick="switchPlot('graph_html/best_month_nonout.html')">Лучшие модели без выбросов</button>
-        </div>
+      <h2>Исходные временные ряды</h2>
+      <div class="button-group">
+        <button onclick="switchPlot('graph_html/vat_monthly.html')">Месячная частота</button>
+        <button onclick="switchPlot('graph_html/vat_annual.html')">Годовая частота</button>
+      </div>
     </div>
 
     <div class="section">
-        <h2>Модели, обученные на данных с годовой частотой</h2>
-        <div class="button-group">
-            <button onclick="switchPlot('graph_html/best_yearly.html')">Лучшие модели</button>
-            <button onclick="switchPlot('graph_html/best_yearly_endog.html')">Лучшие эндогенные модели</button>
-        </div>
+      <h2>Модели с месячной частотой</h2>
+      <div class="button-group">
+        <button onclick="switchPlot('graph_html/best_month.html')">Лучшие модели</button>
+        <button onclick="switchPlot('graph_html/best_month_nonout.html')">Без выбросов</button>
+      </div>
     </div>
 
-    <div class="section" style="margin-top: 40px;">
-        <div class="button-group">
-            <button onclick="switchPlot('graph_html/best_monthly_2_yearly.html')">
-                Сравнение годовых и месячных моделей
-            </button>
-        </div>
+    <div class="section">
+      <h2>Модели с годовой частотой</h2>
+      <div class="button-group">
+        <button onclick="switchPlot('graph_html/best_yearly.html')">Лучшие модели</button>
+        <button onclick="switchPlot('graph_html/best_yearly_endog.html')">Эндогенные модели</button>
+      </div>
     </div>
 
-    <iframe id="plot-frame" src="graph_html/vat_monthly.html"></iframe>
+    <div class="section">
+      <h2>Сравнение моделей</h2>
+      <div class="button-group">
+        <button onclick="switchPlot('graph_html/best_monthly_2_yearly.html')">Годовые vs Месячные</button>
+      </div>
+    </div>
+  </div>
 
-    <script>
-        function switchPlot(file) {
-            document.getElementById('plot-frame').src = file;
-        }
+  <iframe id="plot-frame" src="graph_html/vat_monthly.html"></iframe>
 
-        // Перезагрузка при смене ориентации (опционально)
-        window.addEventListener("orientationchange", () => {
-            location.reload();
-        });
-    </script>
+  <script>
+    function switchPlot(file) {
+      document.getElementById('plot-frame').src = file;
+    }
+
+    window.addEventListener("orientationchange", () => {
+      location.reload();
+    });
+  </script>
 </body>
 </html>
