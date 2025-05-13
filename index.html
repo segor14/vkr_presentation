@@ -54,9 +54,12 @@
         <button onclick="switchPlot('graph_html/vat_annual.html')">Исходные годовые ряды</button>
         <button onclick="switchPlot('graph_html/best_month.html')">Месячные модели</button>
         <button onclick="switchPlot('graph_html/best_month_nonout.html')">Месячные модели без выбросов</button>
+        <button onclick="switchPlot('graph_html/best_yearly.html')">Годовые модели</button>
+        <button onclick="switchPlot('graph_html/best_yearly_endog.html')">Годовые эндогенные модели</button>
+        <button onclick="switchPlot('graph_html/best_monthly_2_yearly.html')">Сравнение годовых и месячных моделей</button>
     </div>
 
-    <iframe id="plot-frame" src="year_exog_best.html"></iframe>
+    <iframe id="plot-frame" src="graph_html/vat_monthly.html"></iframe>
 
     <script>
         function switchPlot(file) {
