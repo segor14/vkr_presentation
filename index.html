@@ -50,8 +50,10 @@
     <h1>Выберите график</h1>
 
     <div class="button-container">
-        <button onclick="switchPlot('year_exog_best.html')">Годовые экзогенные модели</button>
-        <button onclick="switchPlot('year_best.html')">Годовые лучшие модели</button>
+        <button onclick="switchPlot('graph_html/vat_monthly.html')">Исходные месячные ряды</button>
+        <button onclick="switchPlot('graph_html/vat_annual.html')">Исходные годовые ряды</button>
+        <button onclick="switchPlot('graph_html/best_month.html')">Месячные модели</button>
+        <button onclick="switchPlot('graph_html/best_month_nonout.html')">Месячные модели без выбросов</button>
     </div>
 
     <iframe id="plot-frame" src="year_exog_best.html"></iframe>
