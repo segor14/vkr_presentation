@@ -19,23 +19,39 @@
             color: #333;
         }
 
-        .button-container {
-            margin: 30px 0;
+        .section {
+            margin: 20px auto;
+            max-width: 1000px;
+            padding: 0 10px;
         }
 
-        .button-container button {
+        .section h2 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button {
             background-color: #4CAF50;
             border: none;
             color: white;
-            padding: 14px 20px;
-            font-size: 16px;
+            padding: 12px 18px;
+            font-size: 15px;
             cursor: pointer;
             border-radius: 5px;
-            margin: 10px;
             transition: background-color 0.3s;
+            flex: 1 1 200px;
+            max-width: 250px;
         }
 
-        .button-container button:hover {
+        button:hover {
             background-color: #45a049;
         }
 
@@ -43,20 +59,92 @@
             width: 100%;
             height: 600px;
             border: none;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            button {
+                font-size: 14px;
+                padding: 10px 14px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .section h2 {
+                font-size: 1.2em;
+            }
+        }
+
+        /* Сообщение при вертикальной ориентации */
+        #rotate-warning {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: 20px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        @media screen and (orientation: portrait) and (max-width: 800px) {
+            #rotate-warning {
+                display: flex;
+            }
+
+            body > *:not(#rotate-warning) {
+                display: none !important;
+            }
         }
     </style>
 </head>
 <body>
+    <div id="rotate-warning">
+        <p>Пожалуйста, поверните устройство в горизонтальное положение для корректного отображения графиков.</p>
+    </div>
+
     <h1>Прогнозирование налоговых доходов бюджета Российской Федерации</h1>
 
-    <div class="button-container">
-        <button onclick="switchPlot('graph_html/vat_monthly.html')">Исходные месячные ряды</button>
-        <button onclick="switchPlot('graph_html/vat_annual.html')">Исходные годовые ряды</button>
-        <button onclick="switchPlot('graph_html/best_month.html')">Месячные модели</button>
-        <button onclick="switchPlot('graph_html/best_month_nonout.html')">Месячные модели без выбросов</button>
-        <button onclick="switchPlot('graph_html/best_yearly.html')">Годовые модели</button>
-        <button onclick="switchPlot('graph_html/best_yearly_endog.html')">Годовые эндогенные модели</button>
-        <button onclick="switchPlot('graph_html/best_monthly_2_yearly.html')">Сравнение годовых и месячных моделей</button>
+    <div class="section">
+        <h2>Исходные временные ряды</h2>
+        <div class="button-group">
+            <button onclick="switchPlot('graph_html/vat_monthly.html')">Месячная частота</button>
+            <button onclick="switchPlot('graph_html/vat_annual.html')">Годовая частота</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Модели, обученные на данных с месячной частотой</h2>
+        <div class="button-group">
+            <button onclick="switchPlot('graph_html/best_month.html')">Лучшие модели</button>
+            <button onclick="switchPlot('graph_html/best_month_nonout.html')">Лучшие модели без выбросов</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Модели, обученные на данных с годовой частотой</h2>
+        <div class="button-group">
+            <button onclick="switchPlot('graph_html/best_yearly.html')">Лучшие модели</button>
+            <button onclick="switchPlot('graph_html/best_yearly_endog.html')">Лучшие эндогенные модели</button>
+        </div>
+    </div>
+
+    <div class="section" style="margin-top: 40px;">
+        <div class="button-group">
+            <button onclick="switchPlot('graph_html/best_monthly_2_yearly.html')">
+                Сравнение годовых и месячных моделей
+            </button>
+        </div>
     </div>
 
     <iframe id="plot-frame" src="graph_html/vat_monthly.html"></iframe>
@@ -65,6 +153,11 @@
         function switchPlot(file) {
             document.getElementById('plot-frame').src = file;
         }
+
+        // Перезагрузка при смене ориентации (опционально)
+        window.addEventListener("orientationchange", () => {
+            location.reload();
+        });
     </script>
 </body>
 </html>
