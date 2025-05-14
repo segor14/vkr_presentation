@@ -8,7 +8,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
+      padding-bottom: 65vh; /* Чтобы контент не попадал под график */
       background-color: #f4f4f9;
       text-align: center;
     }
@@ -68,11 +68,14 @@
       background-color: #2e7d32;
     }
 
-    iframe {
-      width: 100%;
-      height: 600px;
+    iframe.fixed-iframe {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 65vh;
       border: none;
-      margin-top: 20px;
+      z-index: 1000;
     }
 
     #rotate-warning {
@@ -172,16 +175,14 @@
     </div>
   </div>
 
-  <iframe id="plot-frame" src="graph_html/vat_monthly.html"></iframe>
+  <!-- Фиксированный график -->
+  <iframe id="plot-frame" src="graph_html/vat_monthly.html" class="fixed-iframe"></iframe>
 
   <script>
     function switchPlot(button, file) {
       document.getElementById('plot-frame').src = file;
 
-      // Удалить активный класс у всех кнопок
       document.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-
-      // Назначить активной текущую кнопку
       button.classList.add('active');
     }
 
