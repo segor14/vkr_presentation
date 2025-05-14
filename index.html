@@ -64,6 +64,10 @@
       background-color: #45a049;
     }
 
+    button.active {
+      background-color: #2e7d32;
+    }
+
     iframe {
       width: 100%;
       height: 600px;
@@ -139,31 +143,31 @@
     <div class="section">
       <h2>Исходные временные ряды</h2>
       <div class="button-group">
-        <button onclick="switchPlot('graph_html/vat_monthly.html')">Месячная частота</button>
-        <button onclick="switchPlot('graph_html/vat_annual.html')">Годовая частота</button>
+        <button class="active" onclick="switchPlot(this, 'graph_html/vat_monthly.html')">Месячная частота</button>
+        <button onclick="switchPlot(this, 'graph_html/vat_annual.html')">Годовая частота</button>
       </div>
     </div>
 
     <div class="section">
       <h2>Модели с месячной частотой</h2>
       <div class="button-group">
-        <button onclick="switchPlot('graph_html/best_month.html')">Лучшие модели</button>
-        <button onclick="switchPlot('graph_html/best_month_nonout.html')">Без выбросов</button>
+        <button onclick="switchPlot(this, 'graph_html/best_month.html')">Лучшие модели</button>
+        <button onclick="switchPlot(this, 'graph_html/best_month_nonout.html')">Без выбросов</button>
       </div>
     </div>
 
     <div class="section">
       <h2>Модели с годовой частотой</h2>
       <div class="button-group">
-        <button onclick="switchPlot('graph_html/best_yearly.html')">Лучшие модели</button>
-        <button onclick="switchPlot('graph_html/best_yearly_endog.html')">Эндогенные модели</button>
+        <button onclick="switchPlot(this, 'graph_html/best_yearly.html')">Лучшие модели</button>
+        <button onclick="switchPlot(this, 'graph_html/best_yearly_endog.html')">Эндогенные модели</button>
       </div>
     </div>
 
     <div class="section">
       <h2>Сравнение моделей</h2>
       <div class="button-group">
-        <button onclick="switchPlot('graph_html/best_monthly_2_yearly.html')">Годовые vs Месячные</button>
+        <button onclick="switchPlot(this, 'graph_html/best_monthly_2_yearly.html')">Годовые vs Месячные</button>
       </div>
     </div>
   </div>
@@ -171,8 +175,14 @@
   <iframe id="plot-frame" src="graph_html/vat_monthly.html"></iframe>
 
   <script>
-    function switchPlot(file) {
+    function switchPlot(button, file) {
       document.getElementById('plot-frame').src = file;
+
+      // Удалить активный класс у всех кнопок
+      document.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+
+      // Назначить активной текущую кнопку
+      button.classList.add('active');
     }
 
     window.addEventListener("orientationchange", () => {
