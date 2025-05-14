@@ -8,7 +8,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding-bottom: 65vh; /* Чтобы контент не попадал под график */
+      padding: 0;
       background-color: #f4f4f9;
       text-align: center;
     }
@@ -68,14 +68,11 @@
       background-color: #2e7d32;
     }
 
-    iframe.fixed-iframe {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100vw;
-      height: 65vh;
+    iframe {
+      width: 100%;
       border: none;
-      z-index: 1000;
+      margin-top: 20px;
+      display: block;
     }
 
     #rotate-warning {
@@ -175,15 +172,24 @@
     </div>
   </div>
 
-  <!-- Фиксированный график -->
-  <iframe id="plot-frame" src="graph_html/vat_monthly.html" class="fixed-iframe"></iframe>
+  <iframe id="plot-frame" src="graph_html/vat_monthly.html" onload="resizeIframe(this)"></iframe>
 
   <script>
     function switchPlot(button, file) {
-      document.getElementById('plot-frame').src = file;
+      const iframe = document.getElementById('plot-frame');
+      iframe.src = file;
 
       document.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
       button.classList.add('active');
+    }
+
+    function resizeIframe(iframe) {
+      try {
+        iframe.style.height = iframe.contentWindow.document.body.scrollHeight + "px";
+      } catch (e) {
+        console.warn("Не удалось изменить размер iframe. Возможно, файл загружается с другого домена.");
+        iframe.style.height = "800px"; // запасная высота
+      }
     }
 
     window.addEventListener("orientationchange", () => {
