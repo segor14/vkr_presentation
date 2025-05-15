@@ -3,75 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Интерактивные графики</title>
+  <title>Прогнозирование доходов</title>
   <style>
+    :root {
+      --primary: #2c3e50;
+      --accent: #2980b9;
+      --bg: #ffffff;
+      --border: #ddd;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f9;
-      text-align: center;
+      background: var(--bg);
+      color: var(--primary);
     }
 
     h1 {
-      margin-top: 30px;
-      font-size: 2em;
-      color: #333;
+      font-size: 1.4rem;
+      text-align: center;
+      padding: 1rem 1rem 0.5rem;
+      margin: 0;
     }
 
     .sections-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
+      padding: 0.5rem;
+      gap: 0.5rem;
     }
 
     .section {
-      flex: 1 1 45%;
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      flex: 1 1 180px;
+      min-width: 160px;
+      border: 1px solid var(--border);
+      padding: 0.5rem;
+      border-radius: 6px;
     }
 
     .section h2 {
-      font-size: 1.2em;
-      margin-bottom: 10px;
-      color: #222;
+      font-size: 0.9rem;
+      margin: 0 0 0.5rem;
+      font-weight: 600;
+      text-align: center;
     }
 
     .button-group {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 0.3rem;
     }
 
     button {
-      background-color: #4CAF50;
-      border: none;
-      color: white;
-      padding: 10px 12px;
-      font-size: 14px;
+      font-size: 0.75rem;
+      padding: 6px 8px;
+      border: 1px solid var(--accent);
+      background: none;
+      color: var(--accent);
+      border-radius: 4px;
       cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s;
+      transition: background 0.2s;
     }
 
     button:hover {
-      background-color: #45a049;
+      background: #f0f8ff;
     }
 
     button.active {
-      background-color: #2e7d32;
+      background: var(--accent);
+      color: white;
     }
 
     iframe {
       width: 100%;
       border: none;
-      margin-top: 20px;
+      margin-top: 1rem;
       display: block;
     }
 
@@ -83,15 +91,20 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: #f4f4f9;
+      background-color: #fff;
       color: #333;
-      font-size: 1.2em;
-      font-weight: bold;
+      font-size: 1rem;
       padding: 20px;
       text-align: center;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+    }
+
+    #rotate-warning img {
+      width: 100px;
+      max-width: 70%;
+      margin-bottom: 15px;
     }
 
     @media screen and (orientation: portrait) and (max-width: 800px) {
@@ -104,70 +117,65 @@
       }
     }
 
-    @media (max-width: 768px) {
-      .sections-container {
-        flex-direction: column;
-        padding: 10px;
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.1rem;
+        padding: 1rem 0.5rem 0.5rem;
       }
 
       .section {
         flex: 1 1 100%;
-      }
-
-      button {
-        font-size: 13px;
-        padding: 8px 10px;
-      }
-
-      h1 {
-        font-size: 1.5em;
+        padding: 0.5rem;
       }
 
       .section h2 {
-        font-size: 1em;
+        font-size: 0.85rem;
+      }
+
+      button {
+        font-size: 0.7rem;
+        padding: 5px 6px;
       }
     }
   </style>
 </head>
 <body>
   <div id="rotate-warning">
-    <img src="rotate_phone.png" 
-         alt="Поверните устройство" 
-         style="width: 150px; max-width: 80%; margin-bottom: 20px;" />
+    <img src="rotate_phone.png" alt="Поверните устройство" />
     <p>Пожалуйста, поверните устройство в горизонтальное положение</p>
   </div>
 
-  <h1>Прогнозирование налоговых доходов бюджета Российской Федерации</h1>
+  <h1>Прогнозирование налоговых доходов РФ</h1>
 
   <div class="sections-container">
     <div class="section">
-      <h2>Исходные временные ряды</h2>
+      <h2>Исходные ряды</h2>
       <div class="button-group">
-        <button class="active" onclick="switchPlot(this, 'graph_html/vat_monthly.html')">Месячная частота</button>
-        <button onclick="switchPlot(this, 'graph_html/vat_annual.html')">Годовая частота</button>
+        <button class="active" onclick="switchPlot(this, 'graph_html/vat_monthly.html')">Месячная</button>
+        <button onclick="switchPlot(this, 'graph_html/vat_annual.html')">Годовая</button>
       </div>
     </div>
 
     <div class="section">
-      <h2>Модели с месячной частотой</h2>
+      <h2>Месячные модели</h2>
       <div class="button-group">
-        <button onclick="switchPlot(this, 'graph_html/best_month.html')">Лучшие модели</button>
+        <button onclick="switchPlot(this, 'graph_html/best_month.html')">Лучшие</button>
         <button onclick="switchPlot(this, 'graph_html/best_month_nonout.html')">Без выбросов</button>
       </div>
     </div>
 
     <div class="section">
-      <h2>Модели с годовой частотой</h2>
+      <h2>Годовые модели</h2>
       <div class="button-group">
-        <button onclick="switchPlot(this, 'graph_html/best_yearly.html')">Лучшие модели</button>
-        <button onclick="switchPlot(this, 'graph_html/best_yearly_endog.html')">Эндогенные модели</button>
+        <button onclick="switchPlot(this, 'graph_html/best_yearly.html')">Лучшие</button>
+        <button onclick="switchPlot(this, 'graph_html/best_yearly_endog.html')">Эндогенные</button>
       </div>
     </div>
 
     <div class="section">
-      <h2>Сравнение моделей</h2>
+      <h2>Сравнение</h2>
       <div class="button-group">
-        <button onclick="switchPlot(this, 'graph_html/best_monthly_2_yearly.html')">Годовые vs Месячные</button>
+        <button onclick="switchPlot(this, 'graph_html/best_monthly_2_yearly.html')">Месячные vs Годовые</button>
       </div>
     </div>
   </div>
@@ -187,8 +195,7 @@
       try {
         iframe.style.height = iframe.contentWindow.document.body.scrollHeight + "px";
       } catch (e) {
-        console.warn("Не удалось изменить размер iframe. Возможно, файл загружается с другого домена.");
-        iframe.style.height = "800px"; // запасная высота
+        iframe.style.height = "800px"; // fallback
       }
     }
 
